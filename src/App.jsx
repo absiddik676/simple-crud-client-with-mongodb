@@ -1,33 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const handelAddUser = event => {
+    event.preventDefault()
+    const form = event.target;
+    const name = form.name.value;
+    const email = form.password.value;
+    console.log(name,email);
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+
+      <h1>Simple CRUD </h1>
+      <div className="bg-gray-100 flex items-center justify-center h-screen">
+        <div className="bg-white p-16 rounded shadow-md">
+          <h2 className="text-2xl font-bold mb-6">Login</h2>
+          <form onSubmit={handelAddUser}>
+            <div className="mb-4">
+              <label htmlFor="email" className="block font-medium mb-2">Email</label>
+              <input type="text" id="email" name="name" className="w-full p-2 border rounded" placeholder="Enter your name" />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="password" className="block font-medium mb-2">Password</label>
+              <input type="text" id="password" name="password" className="w-full p-2 border rounded" placeholder="Enter your email" />
+            </div>
+            <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Login</button>
+          </form>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
     </>
   )
 }
