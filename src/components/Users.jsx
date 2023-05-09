@@ -1,13 +1,32 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
-import { useLoaderData } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useLoaderData } from 'react-router-dom';
 
 const Users = () => {
-    const user = useLoaderData()
+    const data = useLoaderData()
+    const [user,setUser] = useState(data)
+
+    const handelDeleteUser = id =>{
+        console.log(id);
+
+        fetch(`http://localhost:5000/deleteUser/${id}`,{
+            method:'DELETE'
+        })
+        .then(res => res.json())
+        .then(data=>{
+            if(data.deletedCount > 0){
+                alert('Delete failed')
+                const reaming = user.filter(user => user._id !== id);
+                setUser(reaming)
+
+            }
+            console.log(data);
+        })
+    }
     return (
        <>
        {
-        user.map(user =><div key={user.id} className=" bg-gray-100 flex flex-col justify-center  sm:px-6 ">
+        user.map(user =><div key={user._id} className=" bg-gray-100 flex flex-col justify-center  sm:px-6 ">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           
           <div className="mt-8 bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
@@ -28,6 +47,8 @@ const Users = () => {
                 {user.email}
                 </dd>
               </div>
+              <button onClick={()=>handelDeleteUser(user._id)} className='px-1 py-1 rounded-sm bg-red-400'>Delete</button>
+              <Link to={`/update/${user._id}`}><button className='w-full py-1 rounded-sm bg-red-400'>Update</button></Link>
             </dl>
           </div>
         </div>
