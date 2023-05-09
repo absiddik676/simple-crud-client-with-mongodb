@@ -12,8 +12,22 @@ const Update = () => {
         const name = form.name.value
         const email = form.email.value
         console.log(name,email);
-
+        const updateData = {name,email}
+        fetch(`http://localhost:5000/user/${data._id}`,{
+            method:'PUT',
+            headers:{
+                'content-type' : 'application/json'
+            },
+            body:JSON.stringify(updateData)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.modifiedCount > 0){
+                alert('data update done')
+            }
+        })
     }
+
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
